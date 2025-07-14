@@ -6,13 +6,23 @@ tasks = []
 
 @app.route('/')
 def index():
-    return render_template('index.html', tasks=tasks)
+    sort = request.args.get('sort')
+    sorted_tasks = tasks.copy()
+
+    if sort =='priority-high':
+        priority_order = {'high': 3, 'medium': 2, 'low': 1}
+        sorted_tasks.sort(key=lambda task: priority_order.get(task['priority'], 0), reverse=True)
+    elif sort == 'priority-low':
+        priority_order = {'high': 3, 'medium': 2, 'low': 1}
+        sorted_tasks.sort(key=lambda task: priority_order.get(task['priority'], 0))
+    return render_template('index.html', tasks=sorted_tasks)
 
 @app.route('/add', methods=['POST'])
 def add_task():
     task_text = request.form.get('task')
+    priority = request.form.get('priority')
     if task_text:
-        tasks.append({'text': task_text, 'completed': False})
+        tasks.append({'text': task_text,'completed': False,'priority': priority})
     return redirect(url_for('index'))
 
 @app.route('/delete/<int:task_index>', methods=['POST'])
