@@ -9,12 +9,20 @@
 
     <form action="/add" method="POST">
         <input type="text" name="task" placeholder="Enter a task" required>
+        <select name="priority">
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+        </select>
         <button type="submit">Add</button>
     </form>
 
     <ul>
         {% for task in tasks %}
-            <li class="{% if task.completed %}completed{% endif %}">
+            <li class="
+                 {% if task.completed %}completed{% endif %}
+                 {% if task.priority %} {{ task.priority }}{% endif %}
+                 ">
                 <form action="/toggle/{{ loop.index0 }}" method="POST" style="display:inline;">
                     <input type="checkbox" onchange="this.form.submit()" {% if task.completed %}checked{% endif %}>
                 </form>

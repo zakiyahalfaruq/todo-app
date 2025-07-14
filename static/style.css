@@ -50,4 +50,17 @@ li {
 .completed {
     text-decoration: line-through;
     color: #999;
+    background-color: #e0e0e0;
+}
+
+.low {
+    border-left: 6px solid green;
+}
+
+.medium {
+    border-left: 6px solid orange;
+}
+
+.high {
+    border-left: 6px solid red;
 }
